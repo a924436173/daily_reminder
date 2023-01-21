@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  daily_reminder_birthday:
+    container_name: daily_reminder_birthday
+    build:
+      context: /web/daily_reminder_birthday
+      dockerfile: /web/daily_reminder_birthday/Dockerfile
+    volumes:
+      - "/web/daily_reminder_birthday:/web/daily_reminder_birthday"
+    restart: always
+    command:
+        - sh
+        - -c
+        - |
+            ls -lh
+            python main.py
+
