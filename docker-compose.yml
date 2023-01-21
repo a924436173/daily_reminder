@@ -3,10 +3,10 @@ services:
   daily_reminder_birthday:
     container_name: daily_reminder_birthday
     build:
-      context: /web/daily_reminder
-      dockerfile: /web/daily_reminder/Dockerfile
+      context: /web/reminder/birthday/daily_reminder
+      dockerfile: /web/reminder/birthday/daily_reminder/Dockerfile
     volumes:
-      - "/web/daily_reminder:/web/daily_reminder"
+      - "/web/reminder/birthday/daily_reminder:/web/daily_reminder"
     restart: always
     command:
         - sh
