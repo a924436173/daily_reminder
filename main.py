@@ -7,6 +7,7 @@ import sys
 import os
 
 from log import log_info
+from star import get_star_remind
 
 
 def get_color():
@@ -104,20 +105,8 @@ def get_birthday(birthday, year, today):
 	return birth_day
 
 
-def get_ciba():
-	url = "http://open.iciba.com/dsapi/"
-	headers = {
-		'Content-Type': 'application/json',
-		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-		              'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-	}
-	r = get(url, headers=headers)
-	note_en = r.json()["content"]
-	note_ch = r.json()["note"]
-	return note_ch, note_en
-
-
-def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en):
+def send_message(to_user, access_token, region_name, weather, temp, wind_dir, lucky_color, she_star, love_index,
+                 daily_fortune):
 	url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
 	week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
 	year = localtime().tm_year
@@ -167,14 +156,23 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
 				"value": love_days,
 				"color": get_color()
 			},
-			"note_en": {
-				"value": note_en,
+			"lucky_color": {
+				"value": lucky_color,
 				"color": get_color()
 			},
-			"note_ch": {
-				"value": note_ch,
+			"she_star": {
+				"value": she_star,
+				"color": get_color()
+			},
+			"love_index": {
+				"value": love_index,
+				"color": get_color()
+			},
+			"daily_fortune": {
+				"value": daily_fortune,
 				"color": get_color()
 			}
+
 		}
 	}
 	for key, value in birthdays.items():
@@ -212,14 +210,12 @@ def main():
 	# 传入地区获取天气信息
 	region = config["region"]
 	weather, temp, wind_dir = get_weather(region)
-	note_ch = config["note_ch"]
-	note_en = config["note_en"]
-	if note_ch == "" and note_en == "":
-		# 获取词霸每日金句
-		note_ch, note_en = get_ciba()
+	# 星座
+	lucky_color, she_star, love_index, daily_fortune = get_star_remind()
 	# 公众号推送消息
 	for user in users:
-		send_message(user, accessToken, region, weather, temp, wind_dir, note_ch, note_en)
+		send_message(user, accessToken, region, weather, temp, wind_dir, lucky_color, she_star, love_index,
+		             daily_fortune)
 	os.system("pause")
 
 
