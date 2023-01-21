@@ -26,7 +26,7 @@ def get_access_token():
 	try:
 		access_token = get(post_url).json()['access_token']
 	except KeyError:
-		print("获取access_token失败，请检查app_id和app_secret是否正确")
+		log_info.error("获取access_token失败，请检查app_id和app_secret是否正确")
 		os.system("pause")
 		sys.exit(1)
 	# print(access_token)
@@ -42,11 +42,11 @@ def get_weather(region):
 	region_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(region, key)
 	response = get(region_url, headers=headers).json()
 	if response["code"] == "404":
-		print("推送消息失败，请检查地区名是否有误！")
+		log_info.error("推送消息失败，请检查地区名是否有误！")
 		os.system("pause")
 		sys.exit(1)
 	elif response["code"] == "401":
-		print("推送消息失败，请检查和风天气key是否正确！")
+		log_info.error("推送消息失败，请检查和风天气key是否正确！")
 		os.system("pause")
 		sys.exit(1)
 	else:
@@ -73,7 +73,7 @@ def get_birthday(birthday, year, today):
 		try:
 			birthday = ZhDate(year, r_mouth, r_day).to_datetime().date()
 		except TypeError:
-			print("请检查生日的日子是否在今年存在")
+			log_info.error("请检查生日的日子是否在今年存在")
 			os.system("pause")
 			sys.exit(1)
 		birthday_month = birthday.month
@@ -193,15 +193,15 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
 	}
 	response = post(url, headers=headers, json=data).json()
 	if response["errcode"] == 40037:
-		print("推送消息失败，请检查模板id是否正确")
+		log_info.error("推送消息失败，请检查模板id是否正确")
 	elif response["errcode"] == 40036:
-		print("推送消息失败，请检查模板id是否为空")
+		log_info.error("推送消息失败，请检查模板id是否为空")
 	elif response["errcode"] == 40003:
-		print("推送消息失败，请检查微信号是否正确")
+		log_info.error("推送消息失败，请检查微信号是否正确")
 	elif response["errcode"] == 0:
-		print("推送消息成功")
+		log_info.info("推送消息成功")
 	else:
-		print(response)
+		log_info.info(response)
 
 
 def main():
