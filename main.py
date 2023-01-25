@@ -25,14 +25,14 @@ def main():
 
 if __name__ == "__main__":
 
-	# from apscheduler.schedulers.blocking import BlockingScheduler
+	from apscheduler.schedulers.blocking import BlockingScheduler
 	try:
 		log_info.info("start reminder ...")
 		main()
-		# sched = BlockingScheduler()
-		# # 每日7.30提醒
-		# sched.add_job(main, 'cron', hour=7, minute=30)
-		# sched.start()
+		sched = BlockingScheduler()
+		# 每日7.30提醒
+		sched.add_job(main, 'cron', hour=7, minute=30)
+		sched.start()
 	except SyntaxError:
 		log_info.error("推送消息失败，请检查配置文件格式是否正确")
 		os.system("pause")
