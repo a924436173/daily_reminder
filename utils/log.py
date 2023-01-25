@@ -1,5 +1,7 @@
 import logging.handlers
 import logging
+import os
+from pathlib import Path
 
 
 class GetLog:
@@ -40,5 +42,6 @@ class GetLog:
 
 
 # 创建info级别的实例，单独的文件记录info日志
-log_info = GetLog(log_abs_path="./info.log").info()
-
+_current_path = Path(__file__)
+_log_path = os.path.join(_current_path.parent.parent, "info.log")
+log_info = GetLog(log_abs_path=_log_path).info()
