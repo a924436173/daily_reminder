@@ -41,6 +41,12 @@ def get_star_remind() -> dict:
 	daily_fortune = data["all_text"]
 	love_index = data["love"]
 	lucky_color = data["lucky_color"]
+	# {'ji': '晚上喝太多水', 'yi': '发展副业计划', 'all': '85%', 'date': '3 / 2月', 'love': '88%', 'work': '75%', 'money': '71%',
+	#  'health': '80%', 'notice': '保留自我的个性', 'discuss': '77%',
+	#  'all_text': '整体运势平平稳稳，能做自己喜欢做的事。相比起合群，你会注重保留自己的个性，即便想法或是计划得不到支持，也不会轻易就放弃。生活方面思想趋于成熟，懂得换位思考，但也容易受感情牵绊。星5座5屋',
+	#  'love_text': '单身的或能打破暧昧确定恋爱关系。恋爱中的沉浸在甜蜜的二人世界中，感情急速升温。', 'work_text': '在大脑酝酿的新想法，还没有落实的机会，要不然就是一开始就容易碰壁。',
+	#  'lucky_star': '天秤座', 'money_text': '建议考虑开拓副业计划，稳守现状很难实现财富自由，也要多学习理财之道。',
+	#  'health_text': '保持多喝水的习惯，但不要在睡前喝太多水，半夜起来频繁上厕所也会影响休息。', 'lucky_color': '青', 'lucky_number': '3'}
 	return {
 		"lucky_color": lucky_color,
 		"she_star": she_star,
